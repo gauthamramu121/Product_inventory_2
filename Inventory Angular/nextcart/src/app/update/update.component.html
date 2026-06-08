@@ -1,0 +1,127 @@
+<div class="form-container">
+
+    <!-- Back navigation -->
+    <div class="back-nav">
+        <button class="back-button" (click)="cancel()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+            Back to products
+        </button>
+    </div>
+
+    <!-- Main form card -->
+    <div class="form-card">
+
+        <div class="form-header">
+            <h1 class="form-title">Update product</h1>
+            <p class="form-subtitle">
+                Modify product information and save changes
+            </p>
+        </div>
+
+        <form (ngSubmit)="update()" class="product-form">
+
+            <div class="form-grid">
+
+                <!-- Left column -->
+                <div class="form-fields">
+
+                    <!-- Product Name -->
+                    <div class="field-group">
+                        <label class="field-label">Product name *</label>
+
+                        <input type="text" class="field-input" [(ngModel)]="product.productName" name="productName"
+                            required>
+                    </div>
+
+                    <!-- Brand -->
+                    <div class="field-group">
+                        <label class="field-label">Brand *</label>
+
+                        <input type="text" class="field-input" [(ngModel)]="product.brand" name="brand" required>
+                    </div>
+
+                    <!-- Price -->
+                    <div class="field-group">
+
+                        <label class="field-label">
+                            Price *
+                        </label>
+
+                        <div class="input-icon-group">
+
+                            <span class="input-prefix">$</span>
+
+                            <input type="number" class="field-input with-prefix" [(ngModel)]="product.price"
+                                name="price" min="0" step="0.01" required>
+                        </div>
+                    </div>
+
+                    <!-- Stock -->
+                    <div class="field-group">
+
+                        <label class="field-label">
+                            Stock quantity *
+                        </label>
+
+                        <input type="number" class="field-input" [(ngModel)]="product.stock" name="stock" min="0"
+                            required>
+                    </div>
+
+                </div>
+
+                <!-- Right column -->
+                <div class="image-upload-section">
+
+                    <label class="field-label">
+                        Product image
+                    </label>
+
+                    <div class="upload-area" (click)="fileInput.click()">
+
+                        <input type="file" hidden #fileInput accept="image/*" (change)="onFileSelected($event)">
+
+                        <!-- Existing or selected image -->
+                        <div class="upload-preview">
+
+                            <img [src]="previewUrl || (IMAGE_URL + product.imageName)"
+                                alt="Preview" class="preview-image">
+
+                            <button type="button" class="remove-image" (click)="removeImage($event)">
+                                ✕
+                            </button>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Actions -->
+            <div class="form-actions">
+
+                <button type="button" class="btn-secondary" (click)="cancel()">
+
+                    Cancel
+                </button>
+
+                <button type="button" class="btn-secondary" (click)="reset()">
+
+                    Reset
+                </button>
+
+                <button type="submit" class="btn-primary">
+
+                    Update product
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>

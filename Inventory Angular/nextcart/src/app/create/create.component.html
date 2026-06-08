@@ -1,0 +1,87 @@
+<div class="form-container">
+    <!-- Back navigation -->
+    <div class="back-nav">
+        <button class="back-button" (click)="cancel()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+            Back to products
+        </button>
+    </div>
+
+    <!-- Main form card -->
+    <div class="form-card">
+        <div class="form-header">
+            <h1 class="form-title">Create new product</h1>
+            <p class="form-subtitle">Fill in the details below to add a product to the catalog</p>
+        </div>
+
+        <form (ngSubmit)="create()" class="product-form">
+            <div class="form-grid">
+                <!-- Left column -->
+                <div class="form-fields">
+                    <!-- Product Name -->
+                    <div class="field-group">
+                        <label class="field-label" for="productName">Product name *</label>
+                        <input type="text" id="productName" class="field-input" [(ngModel)]="product.productName"
+                            name="productName" required placeholder="e.g., Wireless Headphones" />
+                    </div>
+
+                    <!-- Brand -->
+                    <div class="field-group">
+                        <label class="field-label" for="brand">Brand *</label>
+                        <input type="text" id="brand" class="field-input" [(ngModel)]="product.brand" name="brand"
+                            required placeholder="e.g., Sony, Apple, Samsung" />
+                    </div>
+
+                    <!-- Price -->
+                    <div class="field-group">
+                        <label class="field-label" for="price">Price (USD) *</label>
+                        <div class="input-icon-group">
+                            <span class="input-prefix">$</span>
+                            <input type="number" id="price" class="field-input with-prefix" [(ngModel)]="product.price"
+                                name="price" required step="0.01" min="0" placeholder="0.00" />
+                        </div>
+                    </div>
+
+                    <!-- Stock -->
+                    <div class="field-group">
+                        <label class="field-label" for="stock">Stock quantity *</label>
+                        <input type="number" id="stock" class="field-input" [(ngModel)]="product.stock" name="stock"
+                            required min="0" placeholder="0" />
+                    </div>
+                </div>
+
+                <!-- Right column: Image upload -->
+                <div class="image-upload-section">
+                    <label class="field-label">Product image</label>
+                    <div class="upload-area" (click)="fileInput.click()">
+                        <input type="file" #fileInput hidden accept="image/*" (change)="onFileSelected($event)" />
+                        <div *ngIf="!selectedFile" class="upload-placeholder">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="1.2">
+                                <rect x="2" y="2" width="20" height="20" rx="2.18" />
+                                <circle cx="8.5" cy="8.5" r="2.5" />
+                                <path d="M21 15l-5-4-3 3-4-4-5 5" />
+                            </svg>
+                            <p>Click to upload image</p>
+                            <span class="upload-hint">JPG, PNG or GIF up to 5MB</span>
+                        </div>
+                        <div *ngIf="selectedFile" class="upload-preview">
+                            <img [src]="previewUrl" alt="Preview" class="preview-image" />
+                            <button type="button" class="remove-image" (click)="removeImage($event)">✕</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Form actions -->
+            <div class="form-actions">
+                <button type="button" class="btn-secondary" (click)="cancel()">Cancel</button>
+                <button type="button" class="btn-secondary" (click)="reset()">Clear</button>
+                <button type="submit" class="btn-primary">Create product</button>
+            </div>
+        </form>
+    </div>
+</div>

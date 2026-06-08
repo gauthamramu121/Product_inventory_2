@@ -1,0 +1,188 @@
+<div class="product-container">
+  <!-- Header: refined logo + stats -->
+  <header class="catalog-header">
+    <div class="header-content">
+      <div class="logo-area">
+        <div class="logo-icon">
+          <svg width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 12L16 4L28 12L16 20L4 12Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
+            <path d="M8 16L16 20.5L24 16" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
+            <path d="M8 20L16 24.5L24 20" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
+          </svg>
+        </div>
+        <span class="logo-text">Next<span class="logo-accent">Cart</span></span>
+      </div>
+     
+      <button class="btn-add-product" (click)="create()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="12" y1="5" x2="12" y2="19" />
+          <line x1="5" y1="12" x2="19" y2="12" />
+        </svg>
+        Add product
+      </button>
+    </div>
+  </header>
+
+  <!-- Filter Panel: advanced card design -->
+  <div class="filter-panel">
+    <div class="filter-grid">
+      <div class="filter-field">
+        <label class="filter-label">Product name</label>
+        <div class="input-icon-group">
+          <svg class="input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="1.8">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+            <circle cx="12" cy="7" r="4" />
+          </svg>
+          <input type="text" class="filter-input" placeholder="Search name..." [(ngModel)]="searchName"
+            (keyup.enter)="loadProducts(0)" />
+        </div>
+      </div>
+      <div class="filter-field">
+        <label class="filter-label">Brand</label>
+        <div class="input-icon-group">
+          <svg class="input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="1.8">
+            <path
+              d="M20 7h-4.18A3 3 0 0 0 16 5.18V4a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z" />
+            <path d="M16 5.18V7h2.82" />
+          </svg>
+          <input type="text" class="filter-input" placeholder="Brand name..." [(ngModel)]="searchBrand"
+            (keyup.enter)="loadProducts(0)" />
+        </div>
+      </div>
+      <div class="filter-field">
+        <label class="filter-label">Max price</label>
+        <div class="input-icon-group">
+          <svg class="input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="1.8">
+            <path d="M12 2v20M17 7H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H7" />
+          </svg>
+          <input type="number" class="filter-input" placeholder="Any" [(ngModel)]="searchPrice"
+            (keyup.enter)="loadProducts(0)" />
+        </div>
+      </div>
+      <div class="filter-field">
+        <label class="filter-label">Status</label>
+        <div class="input-icon-group select-group">
+          <svg class="input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="1.8">
+            <circle cx="12" cy="12" r="10" />
+            <path d="M12 6v6l4 2" />
+          </svg>
+          <select class="filter-input filter-select" [(ngModel)]="selectedStatus">
+            <option value="">All statuses</option>
+            <option *ngFor="let s of statuses" [value]="s">{{ s | titlecase }}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="filter-actions">
+      <button class="btn-clear" (click)="clearFilters()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M18 6L6 18M6 6l12 12" />
+        </svg>
+        Clear
+      </button>
+      <button class="btn-primary" (click)="loadProducts(0)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+          <circle cx="11" cy="11" r="8" />
+          <line x1="21" y1="21" x2="16.65" y2="16.65" />
+        </svg>
+        Apply filters
+      </button>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main class="product-main">
+    <div class="loading-state" *ngIf="loading">
+      <div class="modern-spinner"></div>
+      <p class="loading-text">Loading products...</p>
+    </div>
+
+    <div class="empty-state" *ngIf="!loading && products.length === 0">
+      <div class="empty-illustration">
+        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+          <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
+          <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+          <path d="M8 11h8M8 15h4" />
+        </svg>
+      </div>
+      <h3 class="empty-title">No products found</h3>
+      <p class="empty-message">Try adjusting your filters or search criteria</p>
+      <button class="empty-reset"
+        (click)="searchName=''; searchBrand=''; searchPrice=undefined; selectedStatus=''; loadProducts(0)">
+        Reset all filters
+      </button>
+    </div>
+
+    <div class="product-grid" *ngIf="!loading && products.length > 0">
+      <article class="product-card" *ngFor="let product of products" (click)="click(product.productId)" tabindex="0"
+        (keyup.enter)="click(product.productId)" role="button"
+        [attr.aria-label]="'View details for ' + product.productName">
+        <div class="card-accent" [class.accent-available]="product.status.toLowerCase() === 'available'"
+          [class.accent-limited]="product.status.toLowerCase() === 'limited'"
+          [class.accent-out]="product.status.toLowerCase() === 'out_of_stock'"></div>
+        <div class="card-header">
+          <div class="brand-badge">{{ product.brand }}</div>
+          <span class="status-pill" [attr.data-status]="product.status.toLowerCase()">
+            <span class="status-dot"></span>
+            {{ product.status }}
+          </span>
+        </div>
+        <div class="card-body">
+          <h3 class="product-title">{{ product.productName }}</h3>
+          <div class="price-tag">
+            <span class="currency">$</span>
+            <span class="price-value">{{ product.price | number:'1.2-2' }}</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span class="view-details">View details</span>
+          <div class="card-arrow">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="5" y1="12" x2="19" y2="12" />
+              <polyline points="12 5 19 12 12 19" />
+            </svg>
+          </div>
+        </div>
+      </article>
+    </div>
+
+     <div class="stats-badge" *ngIf="!loading">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
+          <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+        </svg>
+        <span class="stats-count">{{ products.length }}</span>
+        <span class="stats-label">products</span>
+        <span class="stats-divider">•</span>
+        <span class="stats-page">Page {{ currentPage + 1 }} of {{ totalPages }}</span>
+      </div>
+
+    <nav class="pagination-section" *ngIf="totalPages > 1 && !loading" aria-label="Product navigation">
+      <button class="page-control prev" [disabled]="currentPage === 0" (click)="loadProducts(currentPage - 1)"
+        aria-label="Previous page">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+          <polyline points="15 18 9 12 15 6" />
+        </svg>
+      </button>
+      <div class="page-numbers">
+        <ng-container *ngFor="let p of [].constructor(totalPages); let i = index">
+          <button class="page-num" [class.active]="i === currentPage" (click)="loadProducts(i)"
+            [attr.aria-current]="i === currentPage ? 'page' : null"
+            *ngIf="Math.abs(i - currentPage) <= 2 || i === 0 || i === totalPages - 1">
+            {{ i + 1 }}
+          </button>
+        </ng-container>
+      </div>
+      <button class="page-control next" [disabled]="currentPage === totalPages - 1"
+        (click)="loadProducts(currentPage + 1)" aria-label="Next page">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+          <polyline points="9 18 15 12 9 6" />
+        </svg>
+      </button>
+    </nav>
+  </main>
+</div>
