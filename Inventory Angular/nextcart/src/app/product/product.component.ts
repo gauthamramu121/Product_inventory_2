@@ -6,7 +6,7 @@ import { ProductResponseDTO } from '../model/products';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
-import { EXTENSIONS } from '../model/constant';
+import { EXTENSIONS, IMAGE_URL } from '../model/constant';
 
 @Component({
   selector: 'app-product',
@@ -23,6 +23,8 @@ export class ProductComponent implements OnInit {
   private service = inject(ProductsService);
   private router = inject(Router);
 
+  IMAGE_URL = IMAGE_URL;
+  
   Math = Math;
   String = String;
 

@@ -12,7 +12,7 @@
         </div>
         <span class="logo-text">Next<span class="logo-accent">Cart</span></span>
       </div>
-     
+
       <button class="btn-add-product" (click)="create()">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <line x1="12" y1="5" x2="12" y2="19" />
@@ -131,6 +131,18 @@
             {{ product.status }}
           </span>
         </div>
+        <div class="card-image-container">
+          <img *ngIf="product.imageName" [src]="IMAGE_URL + product.imageName" [alt]="product.productName"
+            class="card-image" />
+
+          <div *ngIf="!product.imageName" class="card-image-placeholder">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="2" y="2" width="20" height="20" rx="2" />
+              <circle cx="8.5" cy="8.5" r="2.5" />
+              <path d="M21 15l-5-4-3 3-4-4-5 5" />
+            </svg>
+          </div>
+        </div>
         <div class="card-body">
           <h3 class="product-title">{{ product.productName }}</h3>
           <div class="price-tag">
@@ -150,16 +162,16 @@
       </article>
     </div>
 
-     <div class="stats-badge" *ngIf="!loading">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-          <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
-          <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
-        </svg>
-        <span class="stats-count">{{ products.length }}</span>
-        <span class="stats-label">products</span>
-        <span class="stats-divider">•</span>
-        <span class="stats-page">Page {{ currentPage + 1 }} of {{ totalPages }}</span>
-      </div>
+    <div class="stats-badge" *ngIf="!loading">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
+        <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+      </svg>
+      <span class="stats-count">{{ products.length }}</span>
+      <span class="stats-label">products</span>
+      <span class="stats-divider">•</span>
+      <span class="stats-page">Page {{ currentPage + 1 }} of {{ totalPages }}</span>
+    </div>
 
     <nav class="pagination-section" *ngIf="totalPages > 1 && !loading" aria-label="Product navigation">
       <button class="page-control prev" [disabled]="currentPage === 0" (click)="loadProducts(currentPage - 1)"
