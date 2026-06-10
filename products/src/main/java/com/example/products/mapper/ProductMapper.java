@@ -17,6 +17,7 @@ public class ProductMapper {
                 .productName(requestDTO.getProductName())
                 .brand(requestDTO.getBrand())
                 .stock(requestDTO.getStock())
+                .description(requestDTO.getDescription())
                 .price(requestDTO.getPrice())
                 .addedOn(LocalDate.now())
                 .build();
@@ -29,6 +30,7 @@ public class ProductMapper {
                 .brand(product.getBrand())
                 .price(product.getPrice())
                 .status(product.getStatus())
+                .description(product.getDescription())
                 .stock(product.getStock())
                 .addedOn(product.getAddedOn())
                 .imageName(product.getImageName())

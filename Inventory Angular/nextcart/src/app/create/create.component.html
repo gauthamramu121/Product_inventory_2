@@ -35,6 +35,14 @@
                             required placeholder="e.g., Sony, Apple, Samsung" />
                     </div>
 
+
+                    <!-- Description -->
+                    <div class="field-group">
+                        <label class="field-label" for="description">Description *</label>
+                        <input type="text" id="description" class="field-input" [(ngModel)]="product.description" name="description"
+                            />
+                    </div>
+
                     <!-- Price -->
                     <div class="field-group">
                         <label class="field-label" for="price">Price (USD) *</label>

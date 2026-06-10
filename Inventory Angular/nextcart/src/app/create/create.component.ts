@@ -23,6 +23,7 @@ export class CreateComponent implements OnInit {
   product: ProductRequestDTO = {
     productName: '',
     brand: '',
+    description:'',
     price: null,
     stock: null,
   };
@@ -89,6 +90,7 @@ export class CreateComponent implements OnInit {
     this.product = {
       productName:'',
       brand:'',
+      description:'',
       price:null,
       stock:null
     }

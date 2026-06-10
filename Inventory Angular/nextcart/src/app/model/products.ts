@@ -6,6 +6,7 @@ export interface LoginData {
 export interface ProductRequestDTO {
     productName: string;
     brand: string;
+    description:string;
     price: number | null;
     stock: number | null;
 }
@@ -14,6 +15,7 @@ export interface ProductResponseDTO {
     productId: number;
     productName: string;
     brand: string;
+    description:string;
     price: number;
     stock: number;
     status: string;

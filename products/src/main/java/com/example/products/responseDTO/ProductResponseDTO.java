@@ -28,6 +28,8 @@ public class ProductResponseDTO {
 
     private Status status;
 
+    private String description;
+
     private LocalDate addedOn;
 
     private String imageName;

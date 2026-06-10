@@ -31,6 +31,7 @@ export class UpdateComponent implements OnInit {
     productName: '',
     brand: '',
     price: 0,
+    description:'',
     stock: 0,
     status: '',
     addedOn: '',

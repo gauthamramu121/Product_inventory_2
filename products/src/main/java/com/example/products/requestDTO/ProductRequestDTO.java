@@ -27,6 +27,9 @@ public class ProductRequestDTO {
     @Min(value = 0 , message = "{product.price.min}")
     private Double price;
 
+    @NotNull(message = "{product.description.not_blank}")
+    private String description;
+
     @NotNull(message = "{product.stock.not_null}")
     @Min(value = 0,message = "{product.stock.min}")
     private Integer stock;

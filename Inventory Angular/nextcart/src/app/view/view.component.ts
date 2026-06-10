@@ -23,6 +23,7 @@ export class ViewComponent implements OnInit {
     productId: 0,
     productName: '',
     brand: '',
+    description:'',
     price: 0,
     stock: 0,
     status: '',
