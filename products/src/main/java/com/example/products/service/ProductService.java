@@ -43,23 +43,6 @@ public class ProductService {
     private final ProductRepository repository;
     private final ObjectMapper objectMapper;
 
-//    @Transactional
-//    public ProductResponseDTO addProduct(ProductRequestDTO requestDTO) {
-//        log.info("Adding new product");
-//
-//        Product product = mapper.convertToEntity(requestDTO);
-//
-//        if (requestDTO.getStock() <= 0) {
-//            product.setStatus(Status.UNAVAILABLE);
-//        } else {
-//            product.setStatus(Status.AVAILABLE);
-//        }
-//
-//        repository.save(product);
-//
-//        return mapper.convertToDTO(product);
-//    }
-
     private String saveImage(MultipartFile file) throws IOException {
 
         if (file == null || file.isEmpty()) {
