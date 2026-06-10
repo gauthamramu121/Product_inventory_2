@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    url: jdbc:mysql://host.docker.internal:3306/ecommerce_platform
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://host.docker.internal:8080/realms/enterprise_management
