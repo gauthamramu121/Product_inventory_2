@@ -3,8 +3,6 @@ package com.example.products.controller;
 import java.io.IOException;
 import java.util.List;
 
-import jakarta.validation.Valid;
-
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +11,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.example.products.entity.Status;
 import com.example.products.requestDTO.PaginationRequestDTO;
-import com.example.products.requestDTO.ProductUpdateDTO;
 import com.example.products.requestDTO.StockUpdateDTO;
 import com.example.products.responseDTO.ProductResponseDTO;
 import com.example.products.service.ProductService;
