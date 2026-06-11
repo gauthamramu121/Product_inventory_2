@@ -313,3 +313,25 @@
   outline: 2px solid #1e5a8a;
   outline-offset: 2px;
 }
+
+.description-section {
+  margin-top: 1.5rem;
+}
+
+.description-label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.75rem;
+}
+
+.description-text {
+  margin: 0;
+  line-height: 1.7;
+  color: #374151;
+  font-size: 0.95rem;
+  white-space: pre-wrap;
+}
