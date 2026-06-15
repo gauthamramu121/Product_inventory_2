@@ -6,7 +6,7 @@ import { ProductResponseDTO } from '../model/products';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
-import { EXTENSIONS, IMAGE_URL } from '../model/constant';
+import { IMAGE_URL } from '../model/constant';
 
 @Component({
   selector: 'app-product',
@@ -15,8 +15,8 @@ import { EXTENSIONS, IMAGE_URL } from '../model/constant';
     CommonModule,
     FormsModule
   ],
-  templateUrl: './product.component.html',
-  styleUrl: './product.component.css'
+  templateUrl: './claude.html',
+  styleUrl: './claude.css'
 })
 export class ProductComponent implements OnInit {
 
@@ -24,13 +24,15 @@ export class ProductComponent implements OnInit {
   private router = inject(Router);
 
   IMAGE_URL = IMAGE_URL;
-  
+
   Math = Math;
-  String = String;
+
+  showFilters = false;
 
   products: ProductResponseDTO[] = [];
   searchName = '';
   searchBrand = '';
+  globalSearch = '';
   searchPrice?: number;
   currentPage = 0;
   totalPages = 0;
@@ -59,6 +61,7 @@ export class ProductComponent implements OnInit {
     const request = {
       page: page,
       size: 4,
+      globalSearch: this.globalSearch,
       productName: this.searchName,
       brand: this.searchBrand,
       status: this.selectedStatus || null,
@@ -92,11 +95,12 @@ export class ProductComponent implements OnInit {
     this.searchBrand = '';
     this.searchPrice = undefined;
     this.selectedStatus = '';
+    this.globalSearch = '';
 
     this.loadProducts(0);
   }
 
-  create(){
+  create() {
     this.router.navigate(['/create']);
   }
 

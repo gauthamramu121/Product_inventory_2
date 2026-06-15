@@ -26,6 +26,7 @@ export interface ProductResponseDTO {
 export interface PaginationRequestDTO {
     page: number;
     size: number;
+    globalSearch:string;
     productId?: number;
     productName?: string;
     brand?: string;

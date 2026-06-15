@@ -39,6 +39,7 @@ export class CreateComponent implements OnInit {
 
   create() {
 
+    console.log(this.product);
     const formData = new FormData();
     formData.append('product', JSON.stringify(this.product));
 

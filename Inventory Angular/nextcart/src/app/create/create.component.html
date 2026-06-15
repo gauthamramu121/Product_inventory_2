@@ -1,95 +1,241 @@
-<div class="form-container">
-    <!-- Back navigation -->
-    <div class="back-nav">
-        <button class="back-button" (click)="cancel()">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="15 18 9 12 15 6"></polyline>
-            </svg>
-            Back to products
+<div class="page-root">
+
+  <!-- Header -->
+  <header class="page-header">
+    <div class="header-inner">
+      <div class="brand-block">
+        <div class="brand-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="12 2 2 7 12 12 22 7 12 2"/>
+            <polyline points="2 17 12 22 22 17"/>
+            <polyline points="2 12 12 17 22 12"/>
+          </svg>
+        </div>
+        <h1 class="brand-title">NextCart</h1>
+      </div>
+      <nav class="header-nav">
+        <button class="btn-ghost" (click)="cancel()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"/>
+          </svg>
+          Back to Products
         </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Page Body -->
+  <main class="page-main">
+
+    <!-- Page Title Row -->
+    <div class="page-title-row">
+      <div>
+        <h2 class="page-title">Add New Product</h2>
+        <p class="page-subtitle">Fill in the details below to list a new product in your catalog.</p>
+      </div>
+      <div class="title-actions">
+        <button class="btn-secondary" type="button" (click)="reset()">Reset</button>
+        <button class="btn-primary" type="button" (click)="create()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+          </svg>
+          Add Product
+        </button>
+      </div>
     </div>
 
-    <!-- Main form card -->
-    <div class="form-card">
-        <div class="form-header">
-            <h1 class="form-title">Create new product</h1>
-            <p class="form-subtitle">Fill in the details below to add a product to the catalog</p>
+    <!-- Two-column layout -->
+    <div class="form-layout">
+
+      <!-- LEFT: Product Details -->
+      <div class="form-col form-col-main">
+
+        <!-- Basic Info Card -->
+        <div class="form-card">
+          <div class="card-header">
+            <span class="card-header-icon">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/>
+                <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/>
+              </svg>
+            </span>
+            <h3 class="card-title">Basic Information</h3>
+          </div>
+
+          <div class="fields-stack">
+
+            <div class="field-row">
+              <div class="field-group">
+                <label class="field-label" for="productName">Product Name <span class="required">*</span></label>
+                <input
+                  id="productName"
+                  class="field-input"
+                  type="text"
+                  placeholder="e.g. Wireless Noise-Cancelling Headphones"
+                  [(ngModel)]="product.productName"
+                  name="productName"
+                />
+              </div>
+            </div>
+
+            <div class="field-row">
+              <div class="field-group">
+                <label class="field-label" for="brand">Brand <span class="required">*</span></label>
+                <input
+                  id="brand"
+                  class="field-input"
+                  type="text"
+                  placeholder="e.g. Sony, Apple, Samsung"
+                  [(ngModel)]="product.brand"
+                  name="brand"
+                />
+              </div>
+            </div>
+
+            <div class="field-row">
+              <div class="field-group">
+                <label class="field-label" for="description">Description</label>
+                <textarea
+                  id="description"
+                  class="field-input field-textarea"
+                  placeholder="Describe the product — key features, specifications, what makes it stand out…"
+                  [(ngModel)]="product.description"
+                  name="description"
+                  rows="4"
+                ></textarea>
+              </div>
+            </div>
+
+          </div>
         </div>
 
-        <form (ngSubmit)="create()" class="product-form">
-            <div class="form-grid">
-                <!-- Left column -->
-                <div class="form-fields">
-                    <!-- Product Name -->
-                    <div class="field-group">
-                        <label class="field-label" for="productName">Product name *</label>
-                        <input type="text" id="productName" class="field-input" [(ngModel)]="product.productName"
-                            name="productName" required placeholder="e.g., Wireless Headphones" />
-                    </div>
+        <!-- Pricing & Inventory Card -->
+        <div class="form-card">
+          <div class="card-header">
+            <span class="card-header-icon">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="1" x2="12" y2="23"/>
+                <path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/>
+              </svg>
+            </span>
+            <h3 class="card-title">Pricing & Inventory</h3>
+          </div>
 
-                    <!-- Brand -->
-                    <div class="field-group">
-                        <label class="field-label" for="brand">Brand *</label>
-                        <input type="text" id="brand" class="field-input" [(ngModel)]="product.brand" name="brand"
-                            required placeholder="e.g., Sony, Apple, Samsung" />
-                    </div>
+          <div class="fields-stack">
+            <div class="field-row two-col">
 
-
-                    <!-- Description -->
-                    <div class="field-group">
-                        <label class="field-label" for="description">Description *</label>
-                        <input type="text" id="description" class="field-input" [(ngModel)]="product.description" name="description"
-                            />
-                    </div>
-
-                    <!-- Price -->
-                    <div class="field-group">
-                        <label class="field-label" for="price">Price (USD) *</label>
-                        <div class="input-icon-group">
-                            <span class="input-prefix">$</span>
-                            <input type="number" id="price" class="field-input with-prefix" [(ngModel)]="product.price"
-                                name="price" required step="0.01" min="0" placeholder="0.00" />
-                        </div>
-                    </div>
-
-                    <!-- Stock -->
-                    <div class="field-group">
-                        <label class="field-label" for="stock">Stock quantity *</label>
-                        <input type="number" id="stock" class="field-input" [(ngModel)]="product.stock" name="stock"
-                            required min="0" placeholder="0" />
-                    </div>
+              <div class="field-group">
+                <label class="field-label" for="price">Price (₹) <span class="required">*</span></label>
+                <div class="input-prefix-wrap">
+                  <span class="input-prefix">₹</span>
+                  <input
+                    id="price"
+                    class="field-input field-input-prefixed"
+                    type="number"
+                    placeholder="0.00"
+                    [(ngModel)]="product.price"
+                    name="price"
+                    min="0"
+                  />
                 </div>
+              </div>
 
-                <!-- Right column: Image upload -->
-                <div class="image-upload-section">
-                    <label class="field-label">Product image</label>
-                    <div class="upload-area" (click)="fileInput.click()">
-                        <input type="file" #fileInput hidden accept="image/*" (change)="onFileSelected($event)" />
-                        <div *ngIf="!selectedFile" class="upload-placeholder">
-                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="1.2">
-                                <rect x="2" y="2" width="20" height="20" rx="2.18" />
-                                <circle cx="8.5" cy="8.5" r="2.5" />
-                                <path d="M21 15l-5-4-3 3-4-4-5 5" />
-                            </svg>
-                            <p>Click to upload image</p>
-                            <span class="upload-hint">JPG, PNG or GIF up to 5MB</span>
-                        </div>
-                        <div *ngIf="selectedFile" class="upload-preview">
-                            <img [src]="previewUrl" alt="Preview" class="preview-image" />
-                            <button type="button" class="remove-image" (click)="removeImage($event)">✕</button>
-                        </div>
-                    </div>
+              <div class="field-group">
+                <label class="field-label" for="stock">Stock Quantity <span class="required">*</span></label>
+                <div class="input-prefix-wrap">
+                  <span class="input-prefix units-prefix">qty</span>
+                  <input
+                    id="stock"
+                    class="field-input field-input-prefixed"
+                    type="number"
+                    placeholder="0"
+                    [(ngModel)]="product.stock"
+                    name="stock"
+                    min="0"
+                  />
                 </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- RIGHT: Image Upload -->
+      <div class="form-col form-col-aside">
+        <div class="form-card image-card">
+          <div class="card-header">
+            <span class="card-header-icon">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>
+              </svg>
+            </span>
+            <h3 class="card-title">Product Image</h3>
+          </div>
+
+          <!-- Upload Zone -->
+          <div class="upload-zone" [class.has-image]="previewUrl" (click)="fileInput.click()">
+
+            <!-- Preview -->
+            <div class="preview-wrap" *ngIf="previewUrl">
+              <img class="preview-img" [src]="previewUrl" alt="Product preview" />
+              <button class="remove-btn" type="button" (click)="removeImage($event)" title="Remove image">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+                </svg>
+              </button>
             </div>
 
-            <!-- Form actions -->
-            <div class="form-actions">
-                <button type="button" class="btn-secondary" (click)="cancel()">Cancel</button>
-                <button type="button" class="btn-secondary" (click)="reset()">Clear</button>
-                <button type="submit" class="btn-primary">Create product</button>
+            <!-- Empty Dropzone -->
+            <div class="dropzone-placeholder" *ngIf="!previewUrl">
+              <div class="dropzone-icon">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="16 16 12 12 8 16"/>
+                  <line x1="12" y1="12" x2="12" y2="21"/>
+                  <path d="M20.39 18.39A5 5 0 0018 9h-1.26A8 8 0 103 16.3"/>
+                </svg>
+              </div>
+              <p class="dropzone-title">Click to upload image</p>
+              <p class="dropzone-hint">PNG, JPG, WEBP — max 10 MB</p>
             </div>
-        </form>
+
+          </div>
+
+          <input
+            #fileInput
+            type="file"
+            accept="image/*"
+            class="hidden-file-input"
+            (change)="onFileSelected($event)"
+          />
+
+          <!-- File name label -->
+          <div class="file-name-row" *ngIf="selectedFile">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            {{ selectedFile.name }}
+          </div>
+
+        </div>
+      </div>
+
     </div>
+
+    <!-- Bottom Action Bar -->
+    <div class="bottom-bar">
+      <button class="btn-ghost" type="button" (click)="cancel()">Cancel</button>
+      <div class="bottom-bar-right">
+        <button class="btn-secondary" type="button" (click)="reset()">Reset fields</button>
+        <button class="btn-primary" type="button" (click)="create()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+          </svg>
+          Add Product
+        </button>
+      </div>
+    </div>
+
+  </main>
 </div>

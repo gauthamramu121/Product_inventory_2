@@ -23,75 +23,98 @@
     </div>
   </header>
 
-  <!-- Filter Panel: advanced card design -->
-  <div class="filter-panel">
+  <!-- Global Search -->
+  <div class="search-panel">
+
+    <div class="global-search">
+
+      <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+        stroke-width="2">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+
+      <input type="text" placeholder="Search products, brands, descriptions, status..." [(ngModel)]="globalSearch"
+        (keyup.enter)="loadProducts(0)">
+
+      <button class="btn-search" (click)="loadProducts(0)">
+        Search
+      </button>
+
+    </div>
+
+    <button class="btn-filter-toggle" (click)="showFilters = !showFilters">
+
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="4" y1="6" x2="20" y2="6"></line>
+        <line x1="7" y1="12" x2="17" y2="12"></line>
+        <line x1="10" y1="18" x2="14" y2="18"></line>
+      </svg>
+
+      Advanced Filters
+
+      <span>{{ showFilters ? '▲' : '▼' }}</span>
+
+    </button>
+
+  </div>
+
+  <!-- Advanced Filters -->
+
+  <div class="filter-panel" *ngIf="showFilters">
+
     <div class="filter-grid">
+
       <div class="filter-field">
-        <label class="filter-label">Product name</label>
-        <div class="input-icon-group">
-          <svg class="input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-            stroke-width="1.8">
-            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-            <circle cx="12" cy="7" r="4" />
-          </svg>
-          <input type="text" class="filter-input" placeholder="Search name..." [(ngModel)]="searchName"
-            (keyup.enter)="loadProducts(0)" />
-        </div>
+        <label class="filter-label">Product Name</label>
+
+        <input type="text" class="filter-input" placeholder="Product name..." [(ngModel)]="searchName">
       </div>
+
       <div class="filter-field">
         <label class="filter-label">Brand</label>
-        <div class="input-icon-group">
-          <svg class="input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-            stroke-width="1.8">
-            <path
-              d="M20 7h-4.18A3 3 0 0 0 16 5.18V4a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z" />
-            <path d="M16 5.18V7h2.82" />
-          </svg>
-          <input type="text" class="filter-input" placeholder="Brand name..." [(ngModel)]="searchBrand"
-            (keyup.enter)="loadProducts(0)" />
-        </div>
+
+        <input type="text" class="filter-input" placeholder="Brand..." [(ngModel)]="searchBrand">
       </div>
+
       <div class="filter-field">
-        <label class="filter-label">Max price</label>
-        <div class="input-icon-group">
-          <svg class="input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-            stroke-width="1.8">
-            <path d="M12 2v20M17 7H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H7" />
-          </svg>
-          <input type="number" class="filter-input" placeholder="Any" [(ngModel)]="searchPrice"
-            (keyup.enter)="loadProducts(0)" />
-        </div>
+        <label class="filter-label">Max Price</label>
+
+        <input type="number" class="filter-input" placeholder="Maximum price" [(ngModel)]="searchPrice">
       </div>
+
       <div class="filter-field">
         <label class="filter-label">Status</label>
-        <div class="input-icon-group select-group">
-          <svg class="input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-            stroke-width="1.8">
-            <circle cx="12" cy="12" r="10" />
-            <path d="M12 6v6l4 2" />
-          </svg>
-          <select class="filter-input filter-select" [(ngModel)]="selectedStatus">
-            <option value="">All statuses</option>
-            <option *ngFor="let s of statuses" [value]="s">{{ s | titlecase }}</option>
-          </select>
-        </div>
+
+        <select class="filter-input filter-select" [(ngModel)]="selectedStatus">
+
+          <option value="">
+            All Statuses
+          </option>
+
+          <option *ngFor="let s of statuses" [value]="s">
+
+            {{ s | titlecase }}
+
+          </option>
+
+        </select>
       </div>
+
     </div>
+
     <div class="filter-actions">
+
       <button class="btn-clear" (click)="clearFilters()">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M18 6L6 18M6 6l12 12" />
-        </svg>
         Clear
       </button>
+
       <button class="btn-primary" (click)="loadProducts(0)">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-          <circle cx="11" cy="11" r="8" />
-          <line x1="21" y1="21" x2="16.65" y2="16.65" />
-        </svg>
-        Apply filters
+        Apply Filters
       </button>
+
     </div>
+
   </div>
 
   <!-- Main Content -->
@@ -112,7 +135,7 @@
       <h3 class="empty-title">No products found</h3>
       <p class="empty-message">Try adjusting your filters or search criteria</p>
       <button class="empty-reset"
-        (click)="searchName=''; searchBrand=''; searchPrice=undefined; selectedStatus=''; loadProducts(0)">
+        (click)="searchName=''; globalSearch=''; searchBrand=''; searchPrice=undefined; selectedStatus=''; loadProducts(0)">
         Reset all filters
       </button>
     </div>
