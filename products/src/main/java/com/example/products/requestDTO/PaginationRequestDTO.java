@@ -33,6 +33,8 @@ public class PaginationRequestDTO {
 
     private LocalDate addedOn;
 
+    private String globalSearch;
+
     private String sortBy;
 
     private String sortDir;
