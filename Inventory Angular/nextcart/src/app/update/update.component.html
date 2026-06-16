@@ -1,134 +1,224 @@
-<div class="form-container">
+<div class="update-root">
 
-    <!-- Back navigation -->
-    <div class="back-nav">
-        <button class="back-button" (click)="cancel()">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="15 18 9 12 15 6"></polyline>
-            </svg>
-            Back to products
-        </button>
-    </div>
-
-    <!-- Main form card -->
-    <div class="form-card">
-
-        <div class="form-header">
-            <h1 class="form-title">Update product</h1>
-            <p class="form-subtitle">
-                Modify product information and save changes
-            </p>
+  <!-- Header -->
+  <header class="catalog-header">
+    <div class="header-inner">
+      <div class="brand-block">
+        <div class="brand-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="12 2 2 7 12 12 22 7 12 2"/>
+            <polyline points="2 17 12 22 22 17"/>
+            <polyline points="2 12 12 17 22 12"/>
+          </svg>
         </div>
+        <h1 class="brand-title">NextCart</h1>
+      </div>
+      <div class="header-actions">
+        <button class="btn-ghost" (click)="cancel()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"/>
+          </svg>
+          Back to Products
+        </button>
+      </div>
+    </div>
+  </header>
 
-        <form (ngSubmit)="update()" class="product-form">
+  <!-- Breadcrumb -->
+  <div class="breadcrumb-bar">
+    <div class="breadcrumb-inner">
+      <span class="bc-link" (click)="cancel()">Products</span>
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="9 18 15 12 9 6"/>
+      </svg>
+      <span class="bc-current">Edit Product #{{ product.productId }}</span>
+    </div>
+  </div>
 
-            <div class="form-grid">
+  <!-- Main -->
+  <main class="update-main">
 
-                <!-- Left column -->
-                <div class="form-fields">
+    <div class="update-layout">
 
-                    <!-- Product Name -->
-                    <div class="field-group">
-                        <label class="field-label">Product name *</label>
+      <!-- Left: Image Upload -->
+      <div class="image-panel">
+        <div class="panel-card">
+          <div class="panel-card-header">
+            <h3 class="panel-card-title">Product Image</h3>
+            <p class="panel-card-sub">Click or drag to replace the current image</p>
+          </div>
 
-                        <input type="text" class="field-input" [(ngModel)]="product.productName" name="productName"
-                            required>
-                    </div>
+          <!-- Drop Zone -->
+          <div class="image-drop-zone" (click)="fileInput.click()" [class.has-image]="previewUrl || product.imageName">
+            <input
+              #fileInput
+              type="file"
+              accept="image/*"
+              class="file-input-hidden"
+              (change)="onFileSelected($event)"
+            />
 
-                    <!-- Brand -->
-                    <div class="field-group">
-                        <label class="field-label">Brand *</label>
+            <!-- Preview -->
+            <ng-container *ngIf="previewUrl; else existingOrEmpty">
+              <img class="image-preview" [src]="previewUrl" alt="Preview" />
+              <button class="remove-image-btn" (click)="removeImage($event)" title="Remove image">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+                </svg>
+              </button>
+              <div class="image-overlay">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                  <polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/>
+                </svg>
+                <span>Change Image</span>
+              </div>
+            </ng-container>
 
-                        <input type="text" class="field-input" [(ngModel)]="product.brand" name="brand" required>
-                    </div>
-
-                    <!-- Description -->
-                    <div class="field-group">
-                        <label class="field-label">Description *</label>
-
-                        <input type="text" class="field-input" [(ngModel)]="product.description" name="description" required>
-                    </div>
-
-                    <!-- Price -->
-                    <div class="field-group">
-
-                        <label class="field-label">
-                            Price *
-                        </label>
-
-                        <div class="input-icon-group">
-
-                            <span class="input-prefix">$</span>
-
-                            <input type="number" class="field-input with-prefix" [(ngModel)]="product.price"
-                                name="price" min="0" step="0.01" required>
-                        </div>
-                    </div>
-
-                    <!-- Stock -->
-                    <div class="field-group">
-
-                        <label class="field-label">
-                            Stock quantity *
-                        </label>
-
-                        <input type="number" class="field-input" [(ngModel)]="product.stock" name="stock" min="0"
-                            required>
-                    </div>
-
+            <ng-template #existingOrEmpty>
+              <ng-container *ngIf="product.imageName; else emptyDrop">
+                <img class="image-preview" [src]="IMAGE_URL + product.imageName" [alt]="product.productName"
+                  onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'" />
+                <div class="drop-placeholder" style="display:none">
+                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>
+                  </svg>
+                  <span>No image available</span>
                 </div>
-
-                <!-- Right column -->
-                <div class="image-upload-section">
-
-                    <label class="field-label">
-                        Product image
-                    </label>
-
-                    <div class="upload-area" (click)="fileInput.click()">
-
-                        <input type="file" hidden #fileInput accept="image/*" (change)="onFileSelected($event)">
-
-                        <!-- Existing or selected image -->
-                        <div class="upload-preview">
-
-                            <img [src]="previewUrl || (IMAGE_URL + product.imageName)"
-                                alt="Preview" class="preview-image">
-
-                            <button type="button" class="remove-image" (click)="removeImage($event)">
-                                ✕
-                            </button>
-
-                        </div>
-                    </div>
-
+                <div class="image-overlay">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/>
+                  </svg>
+                  <span>Change Image</span>
                 </div>
+              </ng-container>
 
+              <ng-template #emptyDrop>
+                <div class="drop-placeholder">
+                  <div class="drop-icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                      <polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/>
+                    </svg>
+                  </div>
+                  <p class="drop-text">Click to upload image</p>
+                  <p class="drop-hint">PNG, JPG, WEBP supported</p>
+                </div>
+              </ng-template>
+            </ng-template>
+          </div>
+
+          <!-- File name tag -->
+          <div class="selected-file-tag" *ngIf="selectedFile">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><polyline points="13 2 13 9 20 9"/>
+            </svg>
+            {{ selectedFile.name }}
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Form -->
+      <div class="form-panel">
+        <div class="panel-card">
+          <div class="panel-card-header">
+            <h3 class="panel-card-title">Product Details</h3>
+            <p class="panel-card-sub">Update the fields below and save your changes</p>
+          </div>
+
+          <div class="form-grid">
+
+            <!-- Product Name -->
+            <div class="form-field form-field-full">
+              <label class="form-label" for="productName">Product Name</label>
+              <input
+                id="productName"
+                class="form-input"
+                type="text"
+                placeholder="e.g. Wireless Noise-Cancelling Headphones"
+                [(ngModel)]="product.productName"
+              />
             </div>
 
-            <!-- Actions -->
-            <div class="form-actions">
-
-                <button type="button" class="btn-secondary" (click)="cancel()">
-
-                    Cancel
-                </button>
-
-                <button type="button" class="btn-secondary" (click)="reset()">
-
-                    Reset
-                </button>
-
-                <button type="submit" class="btn-primary">
-
-                    Update product
-                </button>
-
+            <!-- Brand -->
+            <div class="form-field">
+              <label class="form-label" for="brand">Brand</label>
+              <input
+                id="brand"
+                class="form-input"
+                type="text"
+                placeholder="e.g. Sony, Apple"
+                [(ngModel)]="product.brand"
+              />
             </div>
 
-        </form>
+            <!-- Price -->
+            <div class="form-field">
+              <label class="form-label" for="price">Price (₹)</label>
+              <div class="input-prefix-wrap">
+                <span class="input-prefix">₹</span>
+                <input
+                  id="price"
+                  class="form-input has-prefix"
+                  type="number"
+                  placeholder="0.00"
+                  [(ngModel)]="product.price"
+                  min="0"
+                />
+              </div>
+            </div>
+
+            <!-- Stock -->
+            <div class="form-field">
+              <label class="form-label" for="stock">Stock (units)</label>
+              <input
+                id="stock"
+                class="form-input"
+                type="number"
+                placeholder="0"
+                [(ngModel)]="product.stock"
+                min="0"
+              />
+            </div>
+
+            <!-- Description -->
+            <div class="form-field form-field-full">
+              <label class="form-label" for="description">Description</label>
+              <textarea
+                id="description"
+                class="form-input form-textarea"
+                placeholder="Describe the product — features, specifications, key highlights…"
+                [(ngModel)]="product.description"
+                rows="5"
+              ></textarea>
+            </div>
+
+          </div>
+
+          <!-- Form Actions -->
+          <div class="form-actions">
+            <button class="btn-ghost" type="button" (click)="reset()">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="1 4 1 10 7 10"/>
+                <path d="M3.51 15a9 9 0 1 0 .49-3.47"/>
+              </svg>
+              Reset
+            </button>
+            <button class="btn-ghost" type="button" (click)="cancel()">
+              Cancel
+            </button>
+            <button class="btn-primary" type="button" (click)="update()">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+              Save Changes
+            </button>
+          </div>
+        </div>
+      </div>
 
     </div>
+  </main>
 
 </div>
