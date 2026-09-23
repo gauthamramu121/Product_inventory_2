@@ -1,11 +1,29 @@
-FROM eclipse-temurin:21-jdk
+#FROM eclipse-temurin:21-jdk
+#
+#ARG JAR_FILE=target/*.jar
+#
+#COPY ${JAR_FILE} app.jar
+#
+#EXPOSE 8332
+#
+#ENV SPRING_PROFILES_ACTIVE=docker
+#
+#ENTRYPOINT ["java","-jar","/app.jar"]
+# Build stage
+FROM maven:3.9-eclipse-temurin-21 AS build
 
-ARG JAR_FILE=target/*.jar
+WORKDIR /app
 
-COPY ${JAR_FILE} app.jar
+COPY pom.xml .
+COPY src ./src
 
-EXPOSE 8332
+RUN mvn clean package -DskipTests
 
-ENV SPRING_PROFILES_ACTIVE=docker
+# Runtime stage
+FROM eclipse-temurin:21-jre
 
-ENTRYPOINT ["java","-jar","/app.jar"]
+WORKDIR /app
+
+COPY --from=build /app/target/*.jar app.jar
+
+ENTRYPOINT ["java", "-jar", "app.jar"]
