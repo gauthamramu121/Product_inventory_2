@@ -7,7 +7,8 @@ spring:
       ddl-auto: update
 
   datasource:
-    url: jdbc:mysql://localhost:3306/ecommerce_platform
+#    url: jdbc:mysql://localhost:3306/ecommerce_platform
+    url: jdbc:mysql://mysql:3306/ecommerce_platform
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
 
