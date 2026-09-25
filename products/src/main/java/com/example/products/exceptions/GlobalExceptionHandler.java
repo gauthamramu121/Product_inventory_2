@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import com.example.products.exceptions.customExceptions.ProductNotFoundException;
 import com.example.products.responseDTO.ErrorDTO;
@@ -44,6 +45,18 @@ public class GlobalExceptionHandler {
                 .forEach(err -> errorMap.put(err.getField(), err.getDefaultMessage()));
 
         return errorHandler(exception.getMessage(), request, HttpStatus.BAD_REQUEST, errorMap);
+    }
+
+    @ExceptionHandler(NoResourceFoundException.class)
+    public ResponseEntity<ErrorDTO> resourceNotFound(
+            NoResourceFoundException exception,
+            HttpServletRequest request) {
+
+        return errorHandler(
+                "Resource not found",
+                request,
+                HttpStatus.NOT_FOUND,
+                null);
     }
 
     @ExceptionHandler(ProductNotFoundException.class)
