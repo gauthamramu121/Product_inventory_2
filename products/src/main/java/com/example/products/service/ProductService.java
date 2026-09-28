@@ -59,7 +59,7 @@ public class ProductService {
 
         String fileName = UUID.randomUUID() + extension;
 
-        Path uploadPath = Paths.get("uploads");
+        Path uploadPath = Paths.get("/uploads");
 
         if (!Files.exists(uploadPath)) {
             Files.createDirectories(uploadPath);
