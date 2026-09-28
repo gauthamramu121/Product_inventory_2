@@ -36,6 +36,8 @@ FROM nginxinc/nginx-unprivileged:alpine
 
 COPY --from=build /app/dist/nextcart/browser /usr/share/nginx/html
 
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
 # Nginx unprivileged image listens on port 8080
 EXPOSE 8080
 
